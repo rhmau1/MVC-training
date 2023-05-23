@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WebStatisMVC.Models.Articles>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+<table id="myTable" class="table">
+    <thead>
+        <tr>            
+            <th>Title</th>
+            <th>Excerpt</th>
+            <th>Publish date</th>
+            <th>Author</th>
+            <th>Time read</th>
+            <th>Category</th>
+            <th>Featured images</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>            
+            <td>@item.Title</td>
+            <td>@item.Excerpt</td>
+            <td>@Html.DisplayFor(modelItem => item.Publish_date)</td>
+            <td>@item.Author</td>
+            <td>@item.Time_read</td>
+            <td>@item.Category</td>
+            <td><img src="~/images/@item.Featured_images" style="max-width:100px; max-height:100px" /></td>
+            <td>
+                <ul>
+                    <li><a asp-action="Edit" asp-route-id="@item.id">Edit</a></li>
+                    <li><a asp-action="Details" asp-route-id="@item.id">Details</a></li>
+                    <li><a asp-action="Delete" asp-route-id="@item.id">Delete</a></li>
+                    <li><a asp-action="Full" asp-route-id="@item.id">Article ver</a></li>
+                </ul>                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section scripts {
+    <script src="~/js/datatable.js"></script>
+    <script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
+}

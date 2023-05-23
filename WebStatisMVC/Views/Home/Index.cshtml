@@ -1,0 +1,190 @@
+﻿@model IEnumerable<WebStatisMVC.Models.Articles>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<header class="text-center my-5">
+    <h1 class="display-1">Everything Blog</h1>
+    <p>Find your inspiration here!</p>
+    <center>
+    <form class="d-flex" style="width:30%">
+        <input class="form-control" type="search" placeholder="Search" />
+    </form>
+    </center>
+</header>
+
+
+<style>          
+    .all-blog{        
+        /*margin:10px;*/
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+    }         
+    .blog-post-grid{
+        border:solid;
+        border-width:1px;
+        padding:10px;
+    }
+    .blog-post {
+        width:600px;
+        border:solid;
+        border-width:1px;
+        padding:10px;
+        /*margin-top:30px;*/
+        margin-bottom:30px;
+    }        
+    aside {        
+        padding: 10px;
+        margin: 0 10px 10px 10px;
+        width: 400px;
+        float: right;
+        border:solid;
+        border-width:1px;
+    }  
+    .aside>article{
+        margin-top:30px;
+        margin-bottom:30px;
+    }    
+    .people{
+        display:flex;
+        align-items:center;
+        margin-bottom:30px;
+    }
+             
+    
+    </style>
+
+
+<body>
+
+    @*SECTION RECENT BLOG*@
+<section class="recent-blog">
+    <h3>Recent Blog Post</h3>
+
+    @*ASIDE*@
+
+        <aside>
+            <h3 style="text-align:center">The Most Popular Blog</h3> 
+            <br />
+            @foreach (var item in Model.Take(5))
+            {
+                <article class="row g-0">
+                    <figure class="col-md-6">
+                        <img src="~/images/@item.Featured_images" style="width:100%; max-height:150px; object-fit:cover" />
+                    </figure>
+                    <div style="margin-left:5%" class="col-md-5">
+                        <h5>@item.Title</h5>
+                        <p>
+                            @item.Excerpt
+                            <a asp-area="" asp-controller="Articles" asp-action="Full" asp-route-id="@item.id">More..</a>
+                        </p>
+                    </div>
+                </article>
+            }
+
+
+            <a asp-area="" asp-controller="Articles" asp-action="AllBlog"><h5>Lihat blog lainnya</h5></a>
+            <br />
+            <h3 style="text-align:center">Trending Topic Now</h3> 
+            @foreach (var item in Model.Take(5))
+            {                
+                <ul>
+                    <li>
+                        <h5><a href="#">#@item.Category</a></h5>
+                    </li>                
+                </ul>     
+            }
+            <br />
+
+            <h3 style="text-align:center">Someone You Might Know</h3>
+            @foreach (var item in Model.Take(3))
+            {                
+                <section class="people">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <figure>
+                                    <img style="width:75px; height:75px" src="~/images/wireframe.png" class="rounded-circle" />
+                                </figure>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>@item.Author</h5>    
+                                <h6>bio author</h6>
+                            </div>
+                            <div class="col">
+                                <button class="rounded-pill" style="color:blue; height:30px">Follow</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            }                
+           
+        </aside>
+
+    @*ARTICLE BLOG POST*@
+
+        @foreach (var item in Model.OrderByDescending(x => x.id).Take(3))
+        {
+            <article class="blog-post">
+                <figure>
+                    <img src="~/images/@item.Featured_images" style="width:100%; max-height:400px; object-fit:cover" />
+                    <figcaption class="text-muted">
+                        <p>@item.Author - @Html.DisplayFor(modelItem => item.Publish_date)</p>
+                    </figcaption>
+                </figure>
+                <h5>@item.Title</h5>
+                <p>
+                    @item.Excerpt
+                    <a asp-area="" asp-controller="Articles" asp-action="Full" asp-route-id="@item.id">Continue read..</a>
+                </p>                
+            </article>
+        }
+</section>
+
+    @*SECTION ALL BLOG*@
+<h3 style="text-align:center">All Blog</h3>
+<section class="all-blog">
+    <article class="blog-post-grid">        
+        <h6>Blog 1</h6>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </article>
+    <article class="blog-post-grid">
+        <h6>Blog 2</h6>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </article>
+    <article class="blog-post-grid">
+        <h6>Blog 3</h6>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </article>
+    <article class="blog-post-grid">
+        <h6>Blog 4</h6>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </article>
+    <article class="blog-post-grid">
+        <h6>Blog 5</h6>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </article>
+    <article class="blog-post-grid">
+        <h6>Blog 6</h6>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </article>
+    <article class="blog-post-grid">
+        <h6>Blog 7</h6>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </article>
+    <article class="blog-post-grid">
+        <h6>Blog 8</h6>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </article>
+    <article class="blog-post-grid">
+        <h6>Blog 9</h6>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </article>
+        <a asp-area="" asp-controller="Articles" asp-action="AllBlog"><h5>Lihat blog lainnya</h5></a>
+</section>
+
+</body>
+

@@ -1,0 +1,125 @@
+﻿@model IEnumerable<WebStatisMVC.Models.Articles>
+
+@{
+    ViewData["Title"] = "All Blog";
+}
+
+
+<style>
+    aside {
+        padding: 10px;
+        margin: 0 10px 10px 10px;
+        width: 400px;
+        float: right;
+        border: solid;
+        border-width: 1px;
+    }
+
+    .aside > article {
+        margin-bottom: 30px;
+    }
+    .allblog{
+        width: 600px;
+        border: solid;
+        border-width: 1px;
+        padding: 10px;
+        margin-bottom: 30px;
+    }
+
+
+
+</style>
+
+<body>
+<section class="blog">
+    <h2>ALL BLOG</h2>
+        <aside>
+            <h3 style="text-align:center">The Most Popular Blog</h3>
+            <br />
+            @foreach (var item in Model.Take(5))
+            {
+                <article class="row g-0">
+                    <figure class="col-md-6">
+                        <img src="~/images/@item.Featured_images" style="width:100%; max-height:150px; object-fit:cover" />
+                    </figure>
+                    <div style="margin-left:5%" class="col-md-5">
+                        <h5>@item.Title</h5>
+                        <p>
+                            @item.Excerpt
+                            <a asp-area="" asp-controller="Articles" asp-action="Full" asp-route-id="@item.id">More..</a>
+                        </p>
+                    </div>
+                </article>
+            }
+
+
+            <a asp-area="" asp-controller="Articles" asp-action="AllBlog"><h5>Lihat blog lainnya</h5></a>
+            <br />
+            <h3 style="text-align:center">Trending Topic Now</h3>
+            @foreach (var item in Model.Take(5))
+            {
+                <ul>
+                    <li>
+                        <h5><a href="#">#@item.Category</a></h5>
+                    </li>
+                </ul>
+            }
+            <br />
+
+            <h3 style="text-align:center">Someone You Might Know</h3>
+            @foreach (var item in Model.Take(3))
+            {
+                <section class="people">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <figure>
+                                    <img style="width:75px; height:75px" src="~/images/wireframe.png" class="rounded-circle" />
+                                </figure>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>@item.Author</h5>
+                                <h6>bio author</h6>
+                            </div>
+                            <div class="col">
+                                <button class="rounded-pill" style="color:blue; height:30px">Follow</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            }
+
+        </aside>
+
+    @foreach (var item in Model)
+    {
+        <article class="allblog row g-0">
+            <figure class="col-md-6">
+                <img src="~/images/@item.Featured_images" style="width:100%; max-height:200px; object-fit:cover" />
+            </figure>
+            <div style="margin-left:5%" class="col-md-5">
+                <h5>@item.Title</h5>
+                <p>
+                    @item.Excerpt 
+                    <a asp-area="" asp-controller="Articles" asp-action="Full" asp-route-id="@item.id">More..</a>
+                </p>
+                <div class="row row-cols-2 text-muted">
+                    <div class="col">
+                            <strong>@item.Author</strong>
+                    </div>
+                    <div style="text-align:end" class="col">
+                        @Html.DisplayFor(modelItem=> item.Publish_date)
+                    </div>
+                    <div class="col">
+                        @item.Time_read minutes read
+                    </div>
+                </div>
+                <br />
+                <button class="rounded-pill">@item.Category</button>
+            </div>
+        </article>
+    }
+</section>
+</body>
+

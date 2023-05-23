@@ -1,0 +1,27 @@
+﻿@model WebStatisMVC.Models.Articles
+
+@{
+    ViewData["Title"] = "Full Article";
+}
+
+<section class="detail-article">
+
+<h1 style="text-align:center">@Html.DisplayFor(model => model.Title)</h1>
+    
+<div>   
+    <figure>
+        <center>
+            <img src="~/images/@Html.DisplayFor(model=> model.Featured_images)" style="width:50%; max-height:400px; object-fit:cover" />
+        </center>
+    </figure>
+    <div class="text-muted">        
+        <p><strong>Author: @Html.DisplayFor(model=> model.Author)</strong></p>
+        <p>Time Read: @Html.DisplayFor(model=> model.Time_read) Minutes</p>
+        <p>Published at: @Html.DisplayFor(model=> model.Publish_date) </p>
+    </div>
+    @Html.Raw(Model.Description)
+    <hr />
+    <button class="rounded-pill">@Html.DisplayFor(model => model.Category)</button>
+</div>
+</section>
+
